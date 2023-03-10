@@ -1,35 +1,34 @@
 using Avalonia.Controls;
 using YAMP2.ViewModels;
 
-namespace YAMP2.Views
+namespace YAMP2.Views;
+
+public partial class MainWindow : Window
 {
-    public partial class MainWindow : Window
+    private static MainWindow _this;
+
+    MainWindowViewModel viewModel = new MainWindowViewModel();
+    public MainWindow()
     {
-        private static MainWindow _this;
+        InitializeComponent();
+        DataContext = viewModel;
+        _this = this;
 
-        MainWindowViewModel viewModel = new MainWindowViewModel();
-        public MainWindow()
+        if (!Avalonia.Controls.Design.IsDesignMode)
         {
-            InitializeComponent();
-            DataContext = viewModel;
-            _this = this;
-
-            if (!Avalonia.Controls.Design.IsDesignMode)
-            {
-                Opened += MainWindow_Opened;
-            }
+            Opened += MainWindow_Opened;
         }
+    }
 
-        public static MainWindow GetInstance()
-        {
-            return _this;
-        }
+    public static MainWindow GetInstance()
+    {
+        return _this;
+    }
 
-        private void MainWindow_Opened(object? sender, System.EventArgs e)
-        {
-            var tmp = VideoPlayerViewControl.GetInstance();
-            tmp.SetPlayerHandle();
+    private void MainWindow_Opened(object? sender, System.EventArgs e)
+    {
+        var tmp = VideoPlayerViewControl.GetInstance();
+        tmp.SetPlayerHandle();
 
-        }
     }
 }

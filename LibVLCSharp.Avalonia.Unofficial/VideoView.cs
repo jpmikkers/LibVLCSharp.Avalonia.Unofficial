@@ -10,7 +10,6 @@ using Avalonia.Media;
 using Avalonia.Metadata;
 using Avalonia.Platform;
 using Avalonia.VisualTree;
-using CSharpFunctionalExtensions;
 using LibVLCSharp.Shared;
 using Avalonia.Layout;
 using System.Linq;
@@ -28,16 +27,16 @@ namespace LibVLCSharp.Avalonia.Unofficial
     public class VideoView : NativeControlHost    
     {
         
-        public static readonly DirectProperty<VideoView, Maybe<MediaPlayer>> MediaPlayerProperty =
-            AvaloniaProperty.RegisterDirect<VideoView, Maybe<MediaPlayer>>(
+        public static readonly DirectProperty<VideoView, MediaPlayer?> MediaPlayerProperty =
+            AvaloniaProperty.RegisterDirect<VideoView, MediaPlayer?>(
                 nameof(MediaPlayer),
                 o => o.MediaPlayer,
-                (o, v) => o.MediaPlayer = v.GetValueOrDefault(),
+                (o, v) => o.MediaPlayer = v,
                 defaultBindingMode: BindingMode.TwoWay);        
 
         private readonly IDisposable attacher;
-        private readonly BehaviorSubject<Maybe<MediaPlayer>> mediaPlayers = new(Maybe<MediaPlayer>.None);
-        private readonly BehaviorSubject<Maybe<IPlatformHandle>> platformHandles = new(Maybe<IPlatformHandle>.None);
+        private readonly BehaviorSubject<MediaPlayer?> mediaPlayers = new(null);
+        private readonly BehaviorSubject<IPlatformHandle?> platformHandles = new(null);
         
         public IPlatformHandle hndl;
 
@@ -58,20 +57,19 @@ namespace LibVLCSharp.Avalonia.Unofficial
 
             attacher = platformHandles.WithLatestFrom(mediaPlayers).Subscribe(x =>
             {
-                var playerAndHandle = from h in x.First
-                                      from mp in x.Second                                      
-                                      select new { n = h, m = mp };
-
-                playerAndHandle.Execute(a => a.m.SetHandle(a.n));
+                if(x.First is not null && x.Second is not null)
+                {
+                   x.Second.SetHandle(x.First);
+                }
             });
 
             ContentProperty.Changed.AddClassHandler<VideoView>((s, e) => s.InitializeNativeOverlay());
             IsVisibleProperty.Changed.AddClassHandler<VideoView>((s, e) => s.ShowNativeOverlay(s.IsVisible));
         }
 
-        public MediaPlayer MediaPlayer
+        public MediaPlayer? MediaPlayer
         {
-            get => mediaPlayers.Value.GetValueOrDefault();
+            get => mediaPlayers.Value;
             set => mediaPlayers.OnNext(value);
         }
 
@@ -160,7 +158,7 @@ namespace LibVLCSharp.Avalonia.Unofficial
         protected override IPlatformHandle CreateNativeControlCore(IPlatformHandle parent)
         {
             var handle = base.CreateNativeControlCore(parent);
-            platformHandles.OnNext(Maybe<IPlatformHandle>.From(handle));
+            platformHandles.OnNext(handle);
             hndl = handle;
             return handle;
         }
@@ -170,10 +168,9 @@ namespace LibVLCSharp.Avalonia.Unofficial
         {
             attacher.Dispose();
             base.DestroyNativeControlCore(control);
-            mediaPlayers.Value.Execute(MediaPlayerExtensions.DisposeHandle);
+            mediaPlayers.Value?.DisposeHandle();
         }
         
-
         private void ShowNativeOverlay(bool show)
         {
             if (_floatingContent == null || _floatingContent.IsVisible == show)
@@ -309,9 +306,5 @@ namespace LibVLCSharp.Avalonia.Unofficial
                 player.XWindow = (uint)handle.Handle;
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) player.NsObject = handle.Handle;
         }
-
-
-
-
     }
 }

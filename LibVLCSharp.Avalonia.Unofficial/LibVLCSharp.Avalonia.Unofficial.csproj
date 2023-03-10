@@ -17,13 +17,13 @@ LibVLC needs to be installed separately, see VideoLAN.LibVLC.* packages.
     <RootNamespace>LibVLCSharp.Avalonia.Unofficial</RootNamespace>
     <PackageId>LibVLCSharp.Avalonia.Unofficial</PackageId>
     <PackageTags>$(PackageTags);avalonia</PackageTags>
+	  <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.18" />
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.37.0" />
     <PackageReference Include="LibVLCSharp" Version="3.6.7" />
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
   </ItemGroup>

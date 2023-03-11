@@ -1,3 +1,8 @@
+# LibVLCSharp.Avalonia.Unofficial
+
+This is a fork of radiolondra's mediaplayer for Avalonia, my goal was to make it run under Avalonia 11 (preview 5 so far). ALL CREDITS to him for creating this, I merely  poked it with a stick until it compiled for Avalonia v11.
+I decided to base my fork on radiolondra YAMP2 project rather than his LibVLCSharp fork because that one is a little bit too big with the whole VLC tree in there.
+
 # YAMP2
 
 #### Yet Another Media Player v2

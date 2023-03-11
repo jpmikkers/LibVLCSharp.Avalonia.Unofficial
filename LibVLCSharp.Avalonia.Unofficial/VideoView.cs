@@ -94,7 +94,7 @@ public class VideoView : NativeControlHost
     
     private void InitializeNativeOverlay()
     {
-        if (!((IVisual)this).IsAttachedToVisualTree) return;            
+		if(!((Visual)this).IsAttachedToVisualTree()) return;
 
         if (_floatingContent == null && Content != null)            
         {
@@ -120,8 +120,8 @@ public class VideoView : NativeControlHost
                 
             };
                             
-            _floatingContent.PointerEnter += Controls_PointerEnter;
-            _floatingContent.PointerLeave += Controls_PointerLeave;
+			_floatingContent.PointerEntered += Controls_PointerEnter;
+			_floatingContent.PointerExited += Controls_PointerLeave;
 
             
             _disposables = new CompositeDisposable()
@@ -139,14 +139,14 @@ public class VideoView : NativeControlHost
         ShowNativeOverlay(IsEffectivelyVisible);
     }
 
-    public void Controls_PointerEnter(object sender, PointerEventArgs e)
+	public void Controls_PointerEnter(object? sender, PointerEventArgs e)
     {
         Debug.WriteLine("POINTER ENTER");
         _floatingContent.Opacity = 0.8;
         
     }
 
-    public void Controls_PointerLeave(object sender, PointerEventArgs e)
+	public void Controls_PointerLeave(object? sender, PointerEventArgs e)
     {
         Debug.WriteLine("POINTER LEAVE");
         _floatingContent.Opacity = 0;
@@ -184,7 +184,6 @@ public class VideoView : NativeControlHost
 
     private void UpdateOverlayPosition()
     {            
-
         if (_floatingContent == null) return;
 
         bool forceSetWidth = false, forceSetHeight = false;
@@ -258,7 +257,7 @@ public class VideoView : NativeControlHost
 
         InitializeNativeOverlay();
 
-        _isEffectivelyVisible = this.GetVisualAncestors().OfType<IControl>()
+		_isEffectivelyVisible = this.GetVisualAncestors().OfType<Control>()
                 .Select(v => v.GetObservable(IsVisibleProperty))
                 .CombineLatest(v => !v.Any(o => !o))
                 .DistinctUntilChanged()
@@ -307,4 +306,3 @@ public static class MediaPlayerExtensions
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) player.NsObject = handle.Handle;
     }
 }
-

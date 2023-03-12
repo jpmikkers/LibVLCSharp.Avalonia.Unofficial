@@ -1,0 +1,142 @@
+<Window
+    x:Class="DemoApp.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vlcsharp="clr-namespace:LibVLCSharp.Avalonia.Unofficial;assembly=LibVLCSharp.Avalonia.Unofficial"
+    xmlns:vm="using:DemoApp.ViewModels"
+    Title="Avalonia 11 LibVLCSharp demo"
+    Width="640"
+    Height="500"
+    MinWidth="450"
+    MinHeight="300"
+    d:DesignHeight="300"
+    d:DesignWidth="450"
+    x:DataType="vm:MainWindowViewModel"
+    CanResize="True"
+    Icon="/Assets/avalonia-logo.ico"
+    SizeToContent="Manual"
+    mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid
+        Name="MyGrid"
+        Margin="2"
+        ClipToBounds="True"
+        DockPanel.Dock="Left"
+        ShowGridLines="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" MinWidth="200" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="2"
+            Target="fieldMediaFile">
+            Media file
+        </Label>
+        <TextBox
+            Name="fieldMediaFile"
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="2"
+            Text="{CompiledBinding MediaUri}" />
+        <Button
+            Grid.Row="0"
+            Grid.Column="2"
+            Margin="2"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            Command="{CompiledBinding CommandSelectFile}"
+            ToolTip.Tip="Select file">
+            ...
+        </Button>
+
+        <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="2"
+            Target="fieldAction">
+            Action
+        </Label>
+        <StackPanel
+            Name="fieldAction"
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="2"
+            Orientation="Horizontal"
+            Spacing="20">
+            <Button
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Command="{CompiledBinding CommandPlay}">
+                _Play
+            </Button>
+            <Button
+                Margin="0,2,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Command="{CompiledBinding CommandStop}"
+                DockPanel.Dock="Bottom">
+                S_top
+            </Button>
+            <Button
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Command="{CompiledBinding CommandPause}">
+                Pau_se
+            </Button>
+    		<TextBlock VerticalAlignment="Center" Text="{CompiledBinding Status}"/>
+        </StackPanel>
+
+        <ProgressBar
+            Grid.Row="2"
+            Grid.ColumnSpan="4"
+            Margin="4,4,4,4"
+            IsIndeterminate="False"
+            Maximum="100"
+            Minimum="0"
+            ShowProgressText="True"
+            Value="{CompiledBinding Progress}" />
+
+        <Panel
+            Name="PanelView"
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            Background="Black">
+            <vlcsharp:VideoView
+                x:Name="VideoViewer"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+
+                <!--  Content  -->
+                <!--<Panel
+					VerticalAlignment="Bottom"
+					Opacity="0.8"
+					Background="Gray">
+					<TextBlock>This text overlays the videoview</TextBlock>
+				</Panel>-->
+
+            </vlcsharp:VideoView>
+        </Panel>
+    </Grid>
+</Window>

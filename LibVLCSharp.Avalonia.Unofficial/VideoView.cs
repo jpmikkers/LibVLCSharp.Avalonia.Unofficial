@@ -38,7 +38,7 @@ public class VideoView : NativeControlHost
 	private readonly BehaviorSubject<MediaPlayer?> mediaPlayers = new(null);
 	private readonly BehaviorSubject<IPlatformHandle?> platformHandles = new(null);
 
-	public IPlatformHandle? _platformHandle;
+	public IPlatformHandle? PlatformHandle { get; private set; }
 
 	public static readonly StyledProperty<object?> ContentProperty =
 		ContentControl.ContentProperty.AddOwner<VideoView>();
@@ -161,7 +161,7 @@ public class VideoView : NativeControlHost
 	{
 		var handle = base.CreateNativeControlCore(parent);
 		platformHandles.OnNext(handle);
-		_platformHandle = handle;
+		PlatformHandle = handle;
 		return handle;
 	}
 

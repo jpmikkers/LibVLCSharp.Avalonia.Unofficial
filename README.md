@@ -5,6 +5,9 @@ I decided to base my fork on [radiolondra's YAMP2](https://github.com/radiolondr
 
 Once Avalonia V11 final is released, I'll be happy to do a PR into the original project.
 
+## Screenshot
+<img src="./Screens/screenshot.png" width="50%" height="50%">
+
 # YAMP2
 
 #### Yet Another Media Player v2

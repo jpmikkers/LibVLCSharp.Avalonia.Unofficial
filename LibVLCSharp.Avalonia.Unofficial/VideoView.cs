@@ -105,7 +105,7 @@ public class VideoView : NativeControlHost
 			{
 				SystemDecorations = SystemDecorations.None,
 
-				TransparencyLevelHint = WindowTransparencyLevel.Transparent,
+				TransparencyLevelHint = new[] { WindowTransparencyLevel.Transparent },
 				Background = Brushes.Transparent,
 
 				SizeToContent = SizeToContent.WidthAndHeight,

@@ -104,7 +104,7 @@
                 Command="{CompiledBinding CommandPause}">
                 Pau_se
             </Button>
-    		<TextBlock VerticalAlignment="Center" Text="{CompiledBinding Status}"/>
+			<Label VerticalAlignment="Center" Content="{CompiledBinding Status}"></Label>
         </StackPanel>
 
         <ProgressBar

@@ -23,8 +23,8 @@ LibVLC needs to be installed separately, see VideoLAN.LibVLC.* packages.
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.0.2" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.2" />
+    <PackageReference Include="Avalonia" Version="11.0.3" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.3" />
     <PackageReference Include="LibVLCSharp" Version="3.7.0" />
   </ItemGroup>
 </Project>

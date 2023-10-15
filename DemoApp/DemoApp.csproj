@@ -28,10 +28,14 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.4" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.4" />
     <PackageReference Include="Avalonia.Themes.Simple" Version="11.0.4" />
-    <PackageReference Include="MessageBox.Avalonia" Version="3.1.4" />
     <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.18" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LibVLCSharp.Avalonia.Unofficial\LibVLCSharp.Avalonia.Unofficial.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\ErrorDialog.axaml.cs">
+      <DependentUpon>ErrorDialog.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

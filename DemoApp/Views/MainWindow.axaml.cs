@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 using LibVLCSharp.Avalonia.Unofficial;
 using Avalonia.Controls;
-using MsBox.Avalonia;
 
 namespace DemoApp.Views;
 
@@ -44,8 +43,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
 	private async Task DoShowErrorAsync(InteractionContext<string, Unit> ic)
     {
-        var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxStandard("Error", ic.Input);
-        await messageBoxStandardWindow.ShowWindowDialogAsync(this);
+        await ErrorDialog.ShowErrorDialog(this, ic.Input);
         ic.SetOutput(Unit.Default);
     }
 

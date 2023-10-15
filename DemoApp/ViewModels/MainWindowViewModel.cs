@@ -6,11 +6,9 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Linq;
-using System.Net.Sockets;
 using System.ComponentModel.DataAnnotations;
 using LibVLCSharp.Shared;
 using Avalonia.Threading;
-using static System.Net.WebRequestMethods;
 
 namespace DemoApp.ViewModels;
 
